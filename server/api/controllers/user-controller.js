@@ -1,0 +1,44 @@
+import User from "../models/user-model.js";
+
+export const CreateUser = async (req, res) => {
+  const { clerkId } = req.body;
+  try {
+    const user = await User.create({clerkId: clerkId})
+    res.status(201).json(user);
+  }catch (err) {
+    console.log(err)
+    res.status(500).json({ message: "User creation failed", error: err });
+  }}
+
+export const GetUserById = async (req, res) => {
+    const { clerkId } = req.params;
+    try {
+      const user = await User.findOne({ clerkId });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+        res.status(200).json(user);
+    }
+    catch (err) {
+      console.log(err)
+      res.status(500).json({ message: "User retrieval failed", error: err });
+    }   
+}
+
+export const GetMe  = async (req, res) => {
+  const { clerkId } = req.body;
+  try {
+    console.log(clerkId);
+    
+    const user = await User.findOne({ clerkId });
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+      res.status(200).json(user);
+  }
+  catch (err) {
+    console.log(err)
+    res.status(500).json({ message: "User retrieval failed", error: err });
+  } 
+}
