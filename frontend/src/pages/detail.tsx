@@ -1,5 +1,5 @@
 "use client"
-import { ArrowRight, CalendarPlus2, Check, MapPin, PackageSearch,  Snowflake, User, Wallet, X } from 'lucide-react'
+import { ArrowRight, CalendarPlus2, Check, MapPin, PackageSearch,  Snowflake,  Wallet, X } from 'lucide-react'
 import { useEffect,  useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import L from 'leaflet'
