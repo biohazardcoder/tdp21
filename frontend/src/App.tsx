@@ -8,6 +8,13 @@ import { useEffect } from "react"
 import { Fetch } from "./middlewares/Axios"
 import { useDispatch } from "react-redux"
 import { getError, getPending, getUserInfo } from "./toolkits/user-toolkit"
+import { Profile } from "./pages/profile"
+import { Navbar } from "./components/shared/navbar"
+import { DefaultNavbar } from "./components/shared/default-navbar"
+import {Create} from "./pages/create"
+import Loader from "./components/ui/loader"
+import { Loads } from "./pages/loads"
+import { Detail } from "./pages/detail"
 
 const App = () => {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -55,18 +62,80 @@ const App = () => {
     <Routes>
   
       <Route path="/" element={<Home/>}/>
-      <Route path="/sign-in/*" element={
+      <Route path="/profile" element={
+        isLoaded ?
+          <div>
+            <Navbar LoadPage={false}/>
         <section className="min-h-screen flex items-center justify-center">
+          <Profile/>
+        </section>
+          </div>: <div>
+            <Navbar LoadPage={false}/>
+            <section className="h-[90vh] flex items-center justify-center">
+            <Loader/>
+            </section>
+          </div>
+        }
+      />
+      <Route path="/sign-in/*" element={
+       isLoaded ?
+       <div>
+          <DefaultNavbar isLoginPage={true}/>
+         <section className="h-[90vh] flex items-center justify-center">
           <SignIn routing="path" path="/sign-in" />
         </section>
+       </div>: <div>
+        <DefaultNavbar isLoginPage={true}/>
+        <section className="h-[90vh] flex items-center justify-center">
+        <Loader/>
+        </section>
+        </div>
       } />
       <Route path="/sign-up/*" element={
+        isLoaded ?
+        <div>
+        <DefaultNavbar isLoginPage={false}/>
         <section className="min-h-screen flex items-center justify-center">
-          <SignUp routing="path" path="/sign-up" />
+        <SignUp routing="path" path="/sign-up" />
+      </section>
+      </div>: <div>
+        <DefaultNavbar isLoginPage={false}/>
+        <section className="h-[90vh] flex items-center justify-center">
+        <Loader/>
         </section>
+        </div>
       } />
+      <Route path="/create" element={
+        isLoaded ?
+        <div>
+         {isSignedIn ?  <div>
+          <Navbar LoadPage={true}/>
+        <section className="min-h-screen flex items-center justify-center">
+          <Create/>
+        </section>
+         </div>:
+          <div><Error/></div>
+         }
+          </div>: <div>
+          <Navbar  LoadPage={true}/>
+          <section className="h-[90vh] flex items-center justify-center">
+          <Loader/>
+          </section>
+          </div>
+      }/>
       <Route path="*" element={<Error/>}/>
-  
+      <Route path="/loads" element={
+        <div>
+          <Navbar LoadPage={false}/>
+          <Loads/>
+        </div>
+      }/>
+      <Route path="/loads/:id" element={
+        <div>
+          <Navbar LoadPage={true}/>
+          <Detail/>
+        </div>
+      }/>
     </Routes>
   </ThemeProvider>
 )}

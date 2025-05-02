@@ -134,13 +134,13 @@ export const Contact = () => {
                 </CardContent>
                 </div>
                 <CardFooter>
-                    <ul className='flex items-center'>
+                    <ul className='flex items-center mt-2'>
                         {
                             contact.links.map(({ icon, link }: Icon, index: number) => (
                                 <div key={index} className='flex items-center'>
                                     {
                                         icon == "telegram" && <a href={link} target='_blank'>
-                                            <FaTelegramPlane  className='text-xl ml-2 bg-secondary-foreground text-background p-1 rounded-md' />
+                                            <FaTelegramPlane  className='text-xl bg-secondary-foreground text-background p-1 rounded-[5px]' />
                                         </a>
                                     }
                                     {
@@ -186,11 +186,11 @@ export const Contact = () => {
                 </CardHeader>
                 <CardContent>
                     <Label className='text-sm font-semibold'>{t("your-name")}</Label>
-                    <Input onChange={(e: any)=>setName(e.target.value)} value={name} placeholder='John Doe'  type="text" className='w-full bg-secondary-foreground dark:bg-secondary-foreground text-background p-1 rounded-md' />
+                    <Input onChange={(e: any)=>setName(e.target.value)} value={name} placeholder='John Doe'  type="text" className='w-full  bg-sidebar  dark:bg-secondary-foreground text-sidebar-foreground dark:text-sidebar p-1 rounded-md' />
                     <Label className='text-sm font-semibold'>{t("your-email")}</Label>
-                    <Input onChange={(e: any)=>setEmail(e.target.value)} value={email} placeholder='example@gmail.com' type="email" className='w-full bg-secondary-foreground  dark:bg-secondary-foregroundtext-background p-1 rounded-md' />
+                    <Input onChange={(e: any)=>setEmail(e.target.value)} value={email} placeholder='example@gmail.com' type="email" className='w-full  bg-sidebar   dark:bg-secondary-foreground text-sidebar-foreground dark:text-sidebar p-1 rounded-md' />
                     <Label className='text-sm font-semibold'>{t("your-message")}</Label>
-                    <Textarea onChange={(e: any)=>setMessage(e.target.value)} value={message} placeholder={t("contact-input")} className='w-full bg-secondary-foreground dark:bg-secondary-foreground text-background p-1 rounded-md' rows={5} />
+                    <Textarea onChange={(e: any)=>setMessage(e.target.value)} value={message} placeholder={t("contact-input")} className='w-full  bg-sidebar dark:bg-secondary-foreground text-sidebar-foreground dark:text-sidebar p-1 rounded-md' rows={5} />
                 </CardContent>
                 <CardFooter className='flex flex-col items-center'>
                     {
@@ -202,9 +202,10 @@ export const Contact = () => {
                      <button 
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className='bg-primary w-full cursor-pointer text-white p-2 rounded-md mt-2'>{isLoading? `${t("sending")}...`: t("send")}</button>
+                    className='bg-sidebar-primary dark:bg-sidebar w-full cursor-pointer text-white p-2 rounded-md mt-2'>{isLoading? `${t("sending")}...`: t("send")}</button>
                 </CardFooter>
             </Card>
         </div>
     )
 }
+    

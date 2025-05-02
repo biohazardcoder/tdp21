@@ -28,7 +28,6 @@ export const GetUserById = async (req, res) => {
 export const GetMe  = async (req, res) => {
   const { clerkId } = req.body;
   try {
-    console.log(clerkId);
     
     const user = await User.findOne({ clerkId });
     
@@ -41,4 +40,14 @@ export const GetMe  = async (req, res) => {
     console.log(err)
     res.status(500).json({ message: "User retrieval failed", error: err });
   } 
+}
+
+export const GetAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ message: "User retrieval failed", error: err });
+  }
 }

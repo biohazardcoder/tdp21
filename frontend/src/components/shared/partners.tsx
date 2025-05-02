@@ -7,7 +7,9 @@ const fetcher = (url:string)=>Fetch.get(url).then(res=>res.data)
 
 export const Partners = () => {
   const { t } = useTranslation("common");
-      const {data : partners,isLoading} = useSWR<Partner[]>("/partner", fetcher)
+      const {data ,isLoading} = useSWR<Partner[]>("/partner", fetcher) || []
+
+      const partners = data || []
       
    if (isLoading) {
     return <div className="text-center py-8 animate-pulse">{t("loading") || "Loading"}...</div>;
@@ -15,7 +17,7 @@ export const Partners = () => {
   return (
     <div className='w-full py-10' id='collaborates'>
         <h1 className='text-4xl font-semibold text-center'>{t("collaborates")}:</h1>
-           {partners?  (partners.length > 0 ? 
+           {partners ?  (partners.length > 0 ? 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-4 gap-4'>
               <div>
                 {partners.map(({description,images,title,link}:Partner,index:number)=>(

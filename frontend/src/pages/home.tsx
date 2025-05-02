@@ -8,7 +8,7 @@ import { Stats } from "../components/shared/stats"
 export const Home = () => {
   return (
     <div>
-        <Navbar/>
+        <Navbar LoadPage={true}/>
         <Hero/>
         <Stats/>
         <Contact/>

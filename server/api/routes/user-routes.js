@@ -1,11 +1,12 @@
 import express from "express";
-import User from "../models/user-model.js";
-import { CreateUser, GetMe, GetUserById } from "../controllers/user-controller.js";
+import { CreateUser, GetAllUsers, GetMe, GetUserById } from "../controllers/user-controller.js";
 
 const router = express.Router();
+router.get("/", GetAllUsers)
 router.get("/:clerkId", GetUserById)
 router.post("/create", CreateUser)
 router.post("/me", GetMe)
+
 // router.post("/verify", async (req, res) => {
 //   const { clerkId } = req.body;
 //   try {

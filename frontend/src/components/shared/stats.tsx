@@ -3,19 +3,19 @@ import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
 import { Fetch } from '../../middlewares/Axios'
 import { StatsInterface } from '../../types'
+
 const fetcher = (url:string)=>Fetch.get(url).then(res=>res.data)
 export const Stats = () => {
       const { t } = useTranslation("common");
-      const CustomerData = useSWR("/customer", fetcher)
+      const UserData = useSWR("/count", fetcher)
       const LoadData = useSWR("/load", fetcher)
-      
-    const customer = CustomerData?.data?.data?.length
+      const user = UserData?.data?.totalCount
     const load = LoadData?.data?.data?.length
 
      const stats  = [
             {
-                title: t("customers"),
-                length: customer || 0,
+                title: t("users"),
+                length: user || 0,
                 image: "/customer.jpg",
             },
             {

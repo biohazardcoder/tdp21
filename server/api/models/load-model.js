@@ -1,0 +1,41 @@
+import mongoose from "mongoose";
+
+const LoadSchema = new mongoose.Schema({
+        clerkId: { type: String, required: true, unique: true },
+        title: {type:String, required:true},
+        description: {type:String},
+        contact: {type:String,required:true},
+        price: {type:Number, required:true},
+        images: [],
+        location: {
+            from: {
+                city: {type:String, required:true},
+                code:{type:String},
+                coordinates: { lat: {type:Number}, lng: {type:Number} },
+            },
+            to: {
+                city:{type:String, required:true},
+                code:{type:String},
+                coordinates: { lat: {type:Number}, lng: {type:Number} },
+            },
+        },
+        weight: {
+            number: {type:Number,required:true},
+            type: {type:String, default:"kg"}
+        },
+        fridge: {type:Boolean, default:false},
+        connentor: {
+            driver:{type:mongoose.Schema.Types.ObjectId, ref:"Driver"},
+            coordinates: { lat: {type:Number}, lng: {type:Number} },
+        },
+        connections: [
+            {
+                driver: {type:mongoose.Schema.Types.ObjectId, ref:"Driver"},
+                date: {type:Date, default:Date.now}
+            },
+        ]
+},{
+    timestamps:true
+})
+
+export default mongoose.model("Load", LoadSchema)
