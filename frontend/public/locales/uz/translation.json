@@ -113,7 +113,11 @@
 
     "tonna":"Tonna",
     "required":"Barcha maydonlar talab qilinadi",
-    "successfully":"Sizning yukingiz muvaffaqiyatli yaratildi"
+    "successfully":"Sizning yukingiz muvaffaqiyatli yaratildi",
+    "load-saved":"Yuk saqlandi",
+    "load-removed":"Yuk o'chirildi",
+    "no-wishlist":"Xohishlar ro'yxati topilmadi",
+    "explore-loads":"Yuklarni o'rganish"
 
 
 }

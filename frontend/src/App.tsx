@@ -15,6 +15,8 @@ import {Create} from "./pages/create"
 import Loader from "./components/ui/loader"
 import { Loads } from "./pages/loads"
 import { Detail } from "./pages/detail"
+import { Toaster } from "sonner"
+import { Wishlist } from "./pages/wishlist"
 
 const App = () => {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -58,7 +60,7 @@ const App = () => {
   }, [isSignedIn, isLoaded, user]);
   return (
     <ThemeProvider defaultTheme="dark" storageKey="tdp21-theme">
-  
+      <Toaster position="top-center"/> 
     <Routes>
   
       <Route path="/" element={<Home/>}/>
@@ -134,6 +136,13 @@ const App = () => {
         <div>
           <Navbar LoadPage={true}/>
           <Detail/>
+        </div>
+      }/>
+
+      <Route path="/wishlist" element={
+        <div>
+          <Navbar LoadPage={true}/>
+          <Wishlist/>
         </div>
       }/>
     </Routes>

@@ -108,7 +108,7 @@ export const Create = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       resetForm()
-      toast.success(`Successfully!`,{duration:2000,position:'top-center'})
+      toast.success(`Successfully!`)
     } catch (error) {
       console.error("Error creating load:", error);
     }

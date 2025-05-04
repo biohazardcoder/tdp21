@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
   loads: [],
   createdLoads : [],
   isVerified: { type: Boolean, default: false },
-  savedLoads: [],
   myLoads: [{ type: mongoose.Schema.Types.ObjectId, ref: "Load" }],
 }, {timestamps: true});
 

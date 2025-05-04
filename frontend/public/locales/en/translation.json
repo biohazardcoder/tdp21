@@ -108,5 +108,10 @@
     "not-selected":"Not selected",
     "tonna":"Tonna",
     "required":"All fields are required",
-    "successfully":"Your load created successfully"
+    "successfully":"Your load created successfully",
+
+    "load-saved":"Load saved",
+    "load-removed":"Load removed",
+    "no-wishlist":"No wishlist",
+    "explore-loads":"Explore loads"
 }
