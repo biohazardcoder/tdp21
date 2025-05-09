@@ -14,17 +14,17 @@ export const YourLoads = () => {
     const { data, isPending } = useSelector((state: RootState) => state.user)
     const user = (data as UserProps) || {}
     const [search, setSearch] = useState("")
+    if (isPending) {
+        return ( 
+            <div className="w-full flex items-center justify-center h-[90vh]">
+                <Loader/>
+            </div>
+    )}
 
     const filteredLoads = user?.myLoads
         ?.filter(load => load.title.toLowerCase().includes(search.toLowerCase()))
         ?.reverse()
 
-        if (isPending) {
-            return ( 
-                <div className="w-full flex items-center justify-center h-[90vh]">
-                    <Loader/>
-                </div>
-        )}
     return (
         <div className="px-4">
             <h1 className="font-semibold py-2 text-lg">{t("your-loads")}</h1>

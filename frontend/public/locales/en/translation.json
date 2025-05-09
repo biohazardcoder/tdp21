@@ -114,5 +114,6 @@
     "load-saved":"Load saved",
     "load-removed":"Load removed",
     "no-wishlist":"No wishlist",
-    "explore-loads":"Explore loads"
+    "explore-loads":"Explore loads",
+    "accepted" : "Accepted"
 }

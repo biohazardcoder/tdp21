@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator"
 import { SignOutButton, useUser } from "@clerk/clerk-react"
 import { Link } from "react-router-dom"
 import { Button } from "../ui/button"
-import {  FileText, Headset, Heart, History, Home, LogOut, Package, PackagePlus, PackageSearch, User,  Wallet } from "lucide-react"
+import {  FileText, Headset, Heart, History, Home, LogOut, Package, PackageCheck, PackagePlus, PackageSearch, User,  Wallet } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 export const Menu = () => {
@@ -52,6 +52,7 @@ export const Menu = () => {
                   </div>
                 </Button>
               </Link>
+              <Separator/>
               <Link to={"/history"}>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
@@ -68,11 +69,20 @@ export const Menu = () => {
                   </div>
                 </Button>
               </Link>
+              <Separator/>
               <Link to={"/yourloads"}>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
                   <Package/>
                   {t("your-loads")}
+                  </div>
+                </Button>
+              </Link>
+              <Link to={"/accepted"}>
+                <Button variant="ghost" className="w-full block">
+                  <div className="flex items-center gap-2">
+                  <PackageCheck/>
+                  {t("accepted")}
                   </div>
                 </Button>
               </Link>
