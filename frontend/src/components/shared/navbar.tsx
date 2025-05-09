@@ -28,13 +28,17 @@ export const Navbar = ({LoadPage } : {LoadPage :boolean}) => {
         !isSignedIn && isLoaded && (
           <div className="flex items-center gap-2">
              <Link to={"/sign-in"}>
-        <Button variant="outline">
-          Log in
+        <Button variant="outline" className="md:block hidden">
+          {t("login")}
+        </Button>
+
+        <Button variant="default" className="black md:hidden">
+        {t("login")}
         </Button>
         </Link>
-        <Link to={"/sign-up"}>
+        <Link to={"/sign-up"} className="hidden md:block">
         <Button variant="default">
-          Register
+        {t("register")}
         </Button>
         </Link>
           </div>

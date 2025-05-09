@@ -9,6 +9,7 @@ import {
 } from "../ui/dropdown-menu"
 import { useTheme } from "../providers/theme-provider"
 import { useTranslation } from "react-i18next"
+import { Separator } from "../ui/separator"
 
 export function ModeToggle() {
   const { setTheme } = useTheme()
@@ -23,13 +24,15 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer">
           {t("light")}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <Separator/>
+        <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer">
           {t("dark")}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <Separator/>
+        <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
           {t("system")}
         </DropdownMenuItem>
       </DropdownMenuContent>

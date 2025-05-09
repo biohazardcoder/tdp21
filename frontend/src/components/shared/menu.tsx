@@ -68,6 +68,14 @@ export const Menu = () => {
                   </div>
                 </Button>
               </Link>
+              <Link to={"/requests"}>
+                <Button variant="ghost" className="w-full block">
+                  <div className="flex items-center gap-2">
+                  <Package/>
+                  {t("loads")}
+                  </div>
+                </Button>
+              </Link>
               <Link to={"/create"}>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">

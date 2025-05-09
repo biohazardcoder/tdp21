@@ -17,6 +17,11 @@ import { Loads } from "./pages/loads"
 import { Detail } from "./pages/detail"
 import { Toaster } from "sonner"
 import { Wishlist } from "./pages/wishlist"
+import { Balance } from "./pages/balance"
+import { Requests } from "./pages/requests"
+import { Docs } from "./pages/docs/docs"
+import { DocsLogin } from "./pages/docs/docs-login"
+import { DocsLayout } from "./layouts/docs-layout"
 
 const App = () => {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -145,6 +150,49 @@ const App = () => {
           <Wishlist/>
         </div>
       }/>
+
+      <Route path="/balance" element={
+        <div>
+        <Navbar LoadPage={true}/>
+        <Balance/>
+      </div>
+      }/>
+      
+    
+
+    <Route path="/requests" element={
+        <div>
+        <Navbar LoadPage={true}/>
+        <Requests/>
+      </div>
+    }/>
+
+
+    //Docs
+    <Route 
+          path="/docs" 
+          element={
+            <DocsLayout>
+              <Docs />
+            </DocsLayout>
+          }
+        />
+        <Route 
+          path="/docs/login" 
+          element={
+            <DocsLayout>
+              <DocsLogin />
+            </DocsLayout>
+          }
+        />
+        <Route 
+          path="/docs/*" 
+          element={
+            <DocsLayout>
+              <Error />
+            </DocsLayout>
+          }
+        />
     </Routes>
   </ThemeProvider>
 )}
