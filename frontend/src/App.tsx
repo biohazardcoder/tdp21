@@ -19,10 +19,7 @@ import { Toaster } from "sonner"
 import { Wishlist } from "./pages/wishlist"
 import { Balance } from "./pages/balance"
 import { Requests } from "./pages/requests"
-import { Docs } from "./pages/docs/docs"
-import { DocsLogin } from "./pages/docs/docs-login"
-import { DocsLayout } from "./layouts/docs-layout"
-
+import { YourLoads } from "./pages/yourloads"
 const App = () => {
   const { user, isSignedIn, isLoaded } = useUser();
   const dispatch = useDispatch();
@@ -158,7 +155,12 @@ const App = () => {
       </div>
       }/>
       
-    
+    <Route path="/yourloads" element={
+        <div>
+        <Navbar LoadPage={true}/>
+        <YourLoads/>
+      </div>
+      }/>
 
     <Route path="/requests" element={
         <div>
@@ -168,31 +170,6 @@ const App = () => {
     }/>
 
 
-    //Docs
-    <Route 
-          path="/docs" 
-          element={
-            <DocsLayout>
-              <Docs />
-            </DocsLayout>
-          }
-        />
-        <Route 
-          path="/docs/login" 
-          element={
-            <DocsLayout>
-              <DocsLogin />
-            </DocsLayout>
-          }
-        />
-        <Route 
-          path="/docs/*" 
-          element={
-            <DocsLayout>
-              <Error />
-            </DocsLayout>
-          }
-        />
     </Routes>
   </ThemeProvider>
 )}

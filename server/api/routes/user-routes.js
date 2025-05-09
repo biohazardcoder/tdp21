@@ -2,10 +2,10 @@ import express from "express";
 import { CreateUser, GetAllUsers, GetMe, GetUserById } from "../controllers/user-controller.js";
 
 const router = express.Router();
+router.post("/me", GetMe)
 router.get("/", GetAllUsers)
 router.get("/:clerkId", GetUserById)
 router.post("/create", CreateUser)
-router.post("/me", GetMe)
 
 // router.post("/verify", async (req, res) => {
 //   const { clerkId } = req.body;

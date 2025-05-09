@@ -6,6 +6,16 @@ const userSchema = new mongoose.Schema({
   buyHistory: [],
   loads: [],
   createdLoads : [],
+  connecting:[
+    {
+        load: {type:mongoose.Schema.Types.ObjectId, ref:"Load"},
+        status: {
+            type: String,
+            enum: ['Pending', 'Connected', 'Delivered', 'Canceled'],
+            default: 'Pending'
+          }
+              }
+    ],
   isVerified: { type: Boolean, default: false },
   myLoads: [{ type: mongoose.Schema.Types.ObjectId, ref: "Load" }],
 }, {timestamps: true});

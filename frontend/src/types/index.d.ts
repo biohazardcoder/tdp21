@@ -9,6 +9,8 @@ export interface UserProps{
     createdLoads: string[];
     loads: string[];
     __v: number;
+    myLoads: Load[]
+    connecting:[]
 }
 export interface Load {
     _id: string

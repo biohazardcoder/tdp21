@@ -7,7 +7,6 @@ import contactRoutes from "./api/routes/contact-route.js"
 import partnerRoutes from "./api/routes/partner-route.js"
 
 import PaypalServise from "./api/services/paypal-service.js";
-import VisaServise from "./api/services/visa-service.js";
 
 import cors from "cors";
 import dotenv from "dotenv";
@@ -44,7 +43,6 @@ app.use("/api/partner", partnerRoutes);
 
 //Payments
 app.use("/api/paypal",PaypalServise)
-app.use("/api/visa",VisaServise)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -1,5 +1,5 @@
 import User from "../models/user-model.js";
-
+import Load from "../models/load-model.js"
 export const CreateUser = async (req, res) => {
   const { clerkId } = req.body;
   try {
@@ -29,7 +29,9 @@ export const GetMe  = async (req, res) => {
   const { clerkId } = req.body;
   try {
     
-    const user = await User.findOne({ clerkId });
+    const user = await User.findOne({ clerkId }).populate("myLoads").populate({
+          path: "connecting.load",
+        });
     
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -42,7 +44,7 @@ export const GetMe  = async (req, res) => {
   } 
 }
 
-export const GetAllUsers = async (req, res) => {
+export const GetAllUsers = async (_, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -51,3 +53,4 @@ export const GetAllUsers = async (req, res) => {
     res.status(500).json({ message: "User retrieval failed", error: err });
   }
 }
+

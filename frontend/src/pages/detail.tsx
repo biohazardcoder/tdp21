@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarPlus2, Check, Heart, MapPin, PackageSearch,  Snowflake,  Wallet, X } from 'lucide-react'
+import { ArrowRight, CalendarPlus2, Check, Heart, MapPin,   Snowflake,  Wallet, Weight, X } from 'lucide-react'
 import { useEffect,  useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import L from 'leaflet'
@@ -7,13 +7,16 @@ import "leaflet/dist/leaflet.css";
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel'
-import { Load,  Creator } from '../types'
+import { Load,  Creator, UserProps } from '../types'
 import { Fetch } from '../middlewares/Axios'
 import { Button } from '../components/ui/button'
 import Loader from '../components/ui/loader'
 import { Separator } from '../components/ui/separator'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'sonner';
+import { RootState } from '../store';
+import { getError, getPending, getUserInfo } from '../toolkits/user-toolkit';
+import { useUser } from '@clerk/clerk-react';
 export const Detail = () => {
     const {t} = useTranslation()
     const [load, setLoad] = useState<Load>()
@@ -21,59 +24,127 @@ export const Detail = () => {
     const { id } = useParams()
     const [loading, setLoading] = useState(false)
     const [isSaved, setIsSaved] = useState(false)
+    const [already, setAlready] = useState(false)
+    const [connecting, setConnecting] = useState(false)
+    const UserData = useUser()
+    const {data } = useSelector((state:RootState) => state.user)
+    const user= data as UserProps || {}
+    const currentLoadId = user?.myLoads?.find(({_id}:Load) => _id === load?._id) 
+    const mine = load?._id === currentLoadId ? true : false
+    const dispatch = useDispatch();
 
+    async function getMyData() {
+      try {
+        dispatch(getPending());
+        const response = await Fetch.post("/user/me", {
+          clerkId: UserData?.user?.id
+        });
+        if (response?.data) {
+          dispatch(getUserInfo(response.data));
+        } else {
+          dispatch(getError("No user data available"));
+        }
+      } catch (error) {
+        const err = error as Error;
+        dispatch(getError(err.message || "Unknown Token"));
+        console.error(error);
+      }
+    }
     useEffect(() => {
       const getLoadById = async () => {
         try {
           setLoading(true)
-                const response = (await Fetch.get(`/load/${id}`)).data
-                setLoad(response.load)
-                setCreator(response.creator)
-                
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false)
-            }
+          const response = (await Fetch.get(`/load/${id}`)).data
+          setLoad(response.load)
+          setCreator(response.creator)
+          
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false)
         }
-        getLoadById()
+      }
+      getLoadById()
     }, [id])
     
-    const {data } = useSelector((state:any) => state.user)
-    const currentLoadId = data?.myLoads?.find((item:string) => item === load?._id) 
-    const mine = load?._id === currentLoadId ? true : false
-
-        useEffect(() => {
-            const savedLoads = JSON.parse(localStorage.getItem('savedLoads') || '[]')
-            const found = savedLoads.some((savedLoad: Load) => savedLoad._id === load?._id)
-            setIsSaved(found)
-          }, [load])
-          
+    useEffect(() => {
+      const savedLoads = JSON.parse(localStorage.getItem('savedLoads') || '[]')
+      const found = savedLoads.some((savedLoad: Load) => savedLoad._id === load?._id)
+      setIsSaved(found)
+    }, [load])
     
-          const toggleSaveLoad = () => {
-            let savedLoads = JSON.parse(localStorage.getItem('savedLoads') || '[]')
-          
-            const exists = savedLoads.some((savedLoad: Load) => savedLoad._id === load?._id)
-          
-            if (exists) {
-              const updatedLoads = savedLoads.filter((savedLoad: Load) => savedLoad._id !== load?._id)
-              localStorage.setItem('savedLoads', JSON.stringify(updatedLoads))
-              setIsSaved(false)
-                toast.success(t("load-removed"))
-            } else {
-              const minimalLoad = {
-                _id: load?._id,
-                title: load?.title,
-                description: load?.description,
-                images: load?.images,
-              }
-              savedLoads.push(minimalLoad)
-              localStorage.setItem('savedLoads', JSON.stringify(savedLoads))
-              setIsSaved(true)
-              toast.success(t("load-saved"))
+    useEffect(() => {
+      const checkAlreadyConnected = async () => {
+        try {
+          user?.connecting?.forEach((item: { load: Load }) => {
+            if (item.load._id === id) {
+              setAlready(true)
             }
-          }
-          
+          })
+        } catch (error) {
+          console.log(error);
+          toast.error("Something went wrong");
+        }
+      }
+      checkAlreadyConnected()
+        }, [user,id])
+    
+      const handleConnectingDriver = async () => {
+      setConnecting(true)
+      if (!user._id) {
+          toast.error(t("driver-not-found"))
+          setConnecting(false)
+          return
+      }
+      if (!load) {
+          toast.error(t("load-not-found"))
+          setConnecting(false)
+          return
+      }
+      if (user?.coins < load.price/100) {
+          toast.error(t("enough"))
+          setConnecting(false)
+          return
+      }
+      try {
+           await Fetch.post("load/connecting", {
+              id: id, 
+              driver:user._id
+          })            
+          getMyData()
+          toast.success(t("request"));
+      } catch (error) {
+          console.log(error);
+          toast.error(t("wrong"))
+      }finally{
+        setConnecting(false)
+      }
+    }    
+
+    const toggleSaveLoad = () => {
+      let savedLoads = JSON.parse(localStorage.getItem('savedLoads') || '[]')
+    
+      const exists = savedLoads.some((savedLoad: Load) => savedLoad._id === load?._id)
+    
+      if (exists) {
+        const updatedLoads = savedLoads.filter((savedLoad: Load) => savedLoad._id !== load?._id)
+        localStorage.setItem('savedLoads', JSON.stringify(updatedLoads))
+        setIsSaved(false)
+          toast.success(t("load-removed"))
+      } else {
+        const minimalLoad = {
+          _id: load?._id,
+          title: load?.title,
+          description: load?.description,
+          images: load?.images,
+        }
+        savedLoads.push(minimalLoad)
+        localStorage.setItem('savedLoads', JSON.stringify(savedLoads))
+        setIsSaved(true)
+        toast.success(t("load-saved"))
+      }
+    }
+      
           
       
     const StartIcon = new L.Icon({
@@ -134,7 +205,7 @@ export const Detail = () => {
                     </div>
                     <Separator className='my-2'/>
                     <p className="mt-2 flex items-center font-semibold gap-1"><Wallet size={18} />{t("price")}: {load?.price}$</p>
-                    <p className="flex items-center font-semibold gap-1"><PackageSearch size={18} />{t("weight")}: {load?.weight.number}{load?.weight.type}</p>
+                    <p className="flex items-center font-semibold gap-1"><Weight size={18} />{t("weight")}: {load?.weight.number}{load?.weight.type}</p>
                     <h1 className="flex font-semibold items-center gap-1">
                         <MapPin size={18} /> <img width={100} height={100} src={`https://flagcdn.com/w40/${load?.location.from.code}.png`} alt="" className="w-5 h-3" /> {load?.location.from.city} <div className="mt-0.5">
                             <ArrowRight size={14} /></div> <img  width={100} height={100} src={`https://flagcdn.com/w40/${load?.location.to.code}.png`} alt="" className="w-5 h-3" />  {load?.location.to.city}
@@ -154,9 +225,19 @@ export const Detail = () => {
                         <p className='text-xs text-muted-foreground mt-2'>{t("wallet-description")}</p>
                     </div>
                     <Separator className='my-2'/>
-                    <Button className='w-full' disabled={mine} >
-                    {mine ? t("This is your load") : t("send")}
-                    </Button>
+                  <Button
+                    onClick={handleConnectingDriver}
+                    className="w-full"
+                    disabled={mine || already || connecting}
+                  >
+                    {mine
+                      ? t("This is your load")
+                      : already
+                      ? t("already-sent")
+                      : connecting
+                      ? t("pending")
+                      : t("send")}
+                  </Button>
                 </div>
               </div>
                 </div>

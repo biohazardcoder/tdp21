@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator"
 import { SignOutButton, useUser } from "@clerk/clerk-react"
 import { Link } from "react-router-dom"
 import { Button } from "../ui/button"
-import { BookOpenText, FileText, Headset, Heart, History, LogOut, Package, PackagePlus, User, UserCog, Wallet2 } from "lucide-react"
+import {  FileText, Headset, Heart, History, Home, LogOut, Package, PackagePlus, PackageSearch, User,  Wallet } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 export const Menu = () => {
@@ -28,6 +28,14 @@ export const Menu = () => {
             </div>
             <Separator className="my-2"/>
             <div className="space-y-1">
+              <Link to={"/"}>
+                <Button variant="ghost" className="w-full block">
+                  <div className="flex items-center gap-2">
+                  <Home/>
+                  {t("home")}
+                  </div>
+                </Button>
+              </Link>
               <Link to={"/profile"}>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
@@ -55,7 +63,7 @@ export const Menu = () => {
               <Link to={"/balance"}>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
-                  <Wallet2/>
+                  <Wallet/>
                   {t("balance")}
                   </div>
                 </Button>
@@ -64,15 +72,15 @@ export const Menu = () => {
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
                   <Package/>
-                  {t("loads")}
+                  {t("your-loads")}
                   </div>
                 </Button>
               </Link>
               <Link to={"/requests"}>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
-                  <Package/>
-                  {t("loads")}
+                  <PackageSearch/>
+                  {t("requests")}
                   </div>
                 </Button>
               </Link>
@@ -86,14 +94,6 @@ export const Menu = () => {
               </Link>
 
               <Separator className="my-2"/>
-              <Link to={"/docs"}>
-                <Button variant="ghost" className="w-full block">
-                  <div className="flex items-center gap-2">
-                  <BookOpenText/>
-                  {t("docs")}
-                  </div>
-                </Button>
-              </Link>
               <Link to={"/contact"}>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
@@ -111,14 +111,6 @@ export const Menu = () => {
                 </Button>
               </Link>
               <Separator className="my-2"/>
-              <Link to={"/settings"}>
-                <Button variant="ghost" className="w-full block">
-                  <div className="flex items-center gap-2">
-                  <UserCog/>
-                  {t("settings")}
-                  </div>
-                </Button>
-              </Link>
               <SignOutButton>
                 <Button variant="ghost" className="w-full block">
                   <div className="flex items-center gap-2">
