@@ -1,5 +1,6 @@
 import  { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import type { OnApproveData, OnApproveActions } from "@paypal/paypal-js";
 
 function Message({ content }:{content:string}) {
   return <p>{content}</p>;
@@ -73,7 +74,7 @@ function PayPalButton({driverId, selectedCoins} :PayPalButtonProps) {
               setMessage(`Could not initiate PayPal Checkout...${error}`);
             }
           }}
-          onApprove={async (data, actions) => {
+        onApprove={async (data: OnApproveData, actions: OnApproveActions) => {
             try {
               const response = await fetch(
                 `http://localhost:4000/api/paypal/orders/${data.orderID}/capture`,
