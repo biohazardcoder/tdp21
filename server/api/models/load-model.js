@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const LoadSchema = new mongoose.Schema({
-        clerkId: { type: String, required: true, unique: true },
+        clerkId: { type: String, required: true },
         title: {type:String, required:true},
         description: {type:String},
         contact: {type:String,required:true},

@@ -20,6 +20,7 @@ import { Wishlist } from "./pages/wishlist"
 import { Balance } from "./pages/balance"
 import { Requests } from "./pages/requests"
 import { YourLoads } from "./pages/yourloads"
+import { ProfileLayout } from "./layouts/profile-layout"
 const App = () => {
   const { user, isSignedIn, isLoaded } = useUser();
   const dispatch = useDispatch();
@@ -66,21 +67,6 @@ const App = () => {
     <Routes>
   
       <Route path="/" element={<Home/>}/>
-      <Route path="/profile" element={
-        isLoaded ?
-          <div>
-            <Navbar LoadPage={false}/>
-        <section className="min-h-screen flex items-center justify-center">
-          <Profile/>
-        </section>
-          </div>: <div>
-            <Navbar LoadPage={false}/>
-            <section className="h-[90vh] flex items-center justify-center">
-            <Loader/>
-            </section>
-          </div>
-        }
-      />
       <Route path="/sign-in/*" element={
        isLoaded ?
        <div>
@@ -169,7 +155,11 @@ const App = () => {
       </div>
     }/>
 
-
+    <Route path="/profile" element={
+      <ProfileLayout>
+          <Profile/>
+      </ProfileLayout>
+    }/>
     </Routes>
   </ThemeProvider>
 )}

@@ -7,6 +7,7 @@ import {   useUser } from "@clerk/clerk-react"
 import { Menu } from "./menu"
 import { Logo } from "./logo"
 import Loader from "../ui/loader"
+import { Box } from "lucide-react"
 
 export const Navbar = ({LoadPage } : {LoadPage :boolean}) => {
   const {t} = useTranslation()
@@ -18,7 +19,7 @@ export const Navbar = ({LoadPage } : {LoadPage :boolean}) => {
       <Logo/>
       <div className="flex items-center justify-center gap-2">
         <ModeToggle />
-        <LangChanger/>
+        {isLoaded && !isSignedIn && <LangChanger/> }
         {!isLoaded && (
           <div>
             <Loader/>
@@ -51,6 +52,7 @@ export const Navbar = ({LoadPage } : {LoadPage :boolean}) => {
           LoadPage && (
            <Link to={"/loads"}>
             <Button variant="default">
+              <Box size={16}/>
               {t("loads")}
             </Button>
         </Link>)

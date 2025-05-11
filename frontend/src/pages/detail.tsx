@@ -29,10 +29,10 @@ export const Detail = () => {
     const UserData = useUser()
     const {data } = useSelector((state:RootState) => state.user)
     const user= data as UserProps || {}
-    const currentLoadId = user?.myLoads?.find(({_id}:Load) => _id === load?._id) 
-    const mine = load?._id === currentLoadId ? true : false
+    const currentLoad = user?.myLoads?.find(({_id}:Load) => _id === load?._id) 
+    const mine = load?._id === currentLoad?._id ? true : false
     const dispatch = useDispatch();
-
+    
     async function getMyData() {
       try {
         dispatch(getPending());

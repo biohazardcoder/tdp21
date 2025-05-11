@@ -18,7 +18,7 @@ export const LangChanger = () => {
 
   return (
     <Select  onValueChange={handleChange} value={lang} >
-      <SelectTrigger className="w-[120px]" >
+      <SelectTrigger className="w-[100px]" >
         <SelectValue placeholder={"Language"} />
       </SelectTrigger>
       <SelectContent className="px-2">
