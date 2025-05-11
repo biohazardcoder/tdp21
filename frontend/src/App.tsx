@@ -21,6 +21,7 @@ import { Balance } from "./pages/balance"
 import { Requests } from "./pages/requests"
 import { YourLoads } from "./pages/yourloads"
 import { ProfileLayout } from "./layouts/profile-layout"
+import { YourLoadDetail } from "./pages/yourloaddetail"
 const App = () => {
   const { user, isSignedIn, isLoaded } = useUser();
   const dispatch = useDispatch();
@@ -159,6 +160,12 @@ const App = () => {
       <ProfileLayout>
           <Profile/>
       </ProfileLayout>
+    }/>
+    <Route path="/yourload/:id" element={
+      <div>
+        <Navbar LoadPage={false}/>
+        <YourLoadDetail/>
+      </div>
     }/>
     </Routes>
   </ThemeProvider>

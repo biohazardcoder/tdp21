@@ -25,12 +25,27 @@ const LoadSchema = new mongoose.Schema({
         },
         fridge: {type:Boolean, default:false},
         connentor: {
-            driver:{type:mongoose.Schema.Types.ObjectId, ref:"Driver"},
-            coordinates: { lat: {type:Number}, lng: {type:Number} },
+           driver: {
+                    clerkId :{ type:String},
+                    firstName :  { type:String},
+                    lastName : { type:String},
+                    fullName:{type:String},
+                    email: { type:String},
+                    imageUrl:{ type:String},
+                    id:{type:String},
+                    date: {type:Date}
+                },
         },
-        connections: [
-            {
-                driver: {type:mongoose.Schema.Types.ObjectId, ref:"Driver"},
+         connections: [
+           {
+                driver: {
+                    clerkId :{ type:String},
+                    firstName :  { type:String},
+                    lastName : { type:String},
+                    fullName:{type:String},
+                    email: { type:String},
+                    imageUrl:{ type:String},
+                },
                 date: {type:Date, default:Date.now}
             },
         ]

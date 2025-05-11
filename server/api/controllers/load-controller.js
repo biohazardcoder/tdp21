@@ -26,7 +26,7 @@ export const GetAllLoads = async (req, res) => {
 export const GetLoadById = async (req, res) => {
   try {
       const { id } = req.params;
-      const load = await Load.findById(id);
+      const load = await Load.findById(id)
       if (!load) return res.status(404).json({ message: "Load not found." });
 
       const creator = await clerkClient.users.getUser(load.clerkId)
@@ -82,30 +82,97 @@ export const CreateLoad = async (req, res) => {
     }
   };
   
-      export const ConnectingDriver = async (req, res) => {
-      try {
-        
-        const { driver, id } = req.body;
+export const ConnectingDriver = async (req, res) => {
+  try {
     
+    const { driver, id } = req.body;
+
+    const load = await Load.findById(id);
+    if (!load) {
+      return res.status(404).json({ message: "Load not found" });
+    }
+    
+    const currentDriver = await User.findById(driver);
+    if (!currentDriver) {
+      return res.status(404).json({ message: "Driver not found" });
+    }
+    const user = await clerkClient.users.getUser(currentDriver.clerkId)
+
+    load.connections.push({driver : {
+        clerkId :user.id,
+        firstName :  user.firstName,
+        lastName : user.lastName,
+        fullName:user.fullName,
+        email: user.primaryEmailAddress.emailAddress,
+        imageUrl:user.imageUrl
+    }});
+    currentDriver.connecting.push({load : id});
+    
+    await currentDriver.save();
+    await load.save(); 
+
+    res.status(200).json({ message: "Connected" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Problem in connecting the driver", error:error });
+  }
+};
+
+  export const ConnectedDriver = async (req, res) => {
+    try {
+        const { driver, id } = req.body;
+
         const load = await Load.findById(id);
         if (!load) {
           return res.status(404).json({ message: "Load not found" });
         }
-    
-        const currentDriver = await User.findById(driver);
+
+        const currentDriver = await clerkClient.users.getUser(driver);
         if (!currentDriver) {
           return res.status(404).json({ message: "Driver not found" });
         }
-    
-        load.connections.push({driver : driver});
-        currentDriver.connecting.push({load : id});
-    
-        await currentDriver.save();
-        await load.save(); 
-    
-        res.status(200).json({ message: "Connected" });
-      } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Problem in connecting the driver", error:error });
-      }
-    };
+
+        const clerkId = driver || "";
+        const user = await User.findOne({ clerkId });
+
+        
+        load.connentor.driver = {
+          clerkId : driver,
+          firstName :  currentDriver.firstName,
+          lastName : currentDriver.lastName,
+          fullName: currentDriver.fullName,
+          email: currentDriver.primaryEmailAddress.emailAddress,
+          imageUrl:currentDriver.imageUrl,
+          date: Date.now(),
+          id: user._id
+        }
+        
+        
+        user.connecting = user.connecting.filter(
+          (conn) => conn.load.toString() !== id
+        );
+        user.loads.push(id)
+        const onePercentOfPrice = load.price / 100;
+        user.coins -= onePercentOfPrice;
+        
+      await User.updateMany(
+        {
+          _id: { $ne: user._id },
+          "connecting.load": id,
+        },
+        {
+          $set: { "connecting.$[elem].status": "Canceled" },
+        },
+        {
+          arrayFilters: [{ "elem.load": id }],
+        }
+      );
+      await user.save();
+      await load.save();
+      res.status(200).json({ message: "Connected" });
+    } catch (error) {
+        console.error(error);
+      res.status(500).json({ message: "Problem in connect the driver", error });
+    }
+  };
+  

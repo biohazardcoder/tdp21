@@ -10,6 +10,8 @@ import { Input } from "../components/ui/input"
 import { Menu } from "../components/shared/menu"
 import { ModeToggle } from "../components/shared/mode-toggle"
 import { useTranslation } from "react-i18next"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../components/ui/alert-dialog"
+import { SidebarTrigger } from "../components/ui/sidebar"
 
 export const Profile = () => {
   const {t} = useTranslation()
@@ -22,6 +24,7 @@ export const Profile = () => {
   const [lastName, setLastName] = useState('')
   const [lastNameLoading, setLastNameLoading] = useState(false)
   const [editLastName, setEditLastName ] = useState(false)
+  
   
 const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
   const file = e.target.files?.[0]
@@ -71,6 +74,15 @@ const handleChangeLastName = async () => {
     }
   }
 
+const handleDelete = async () => {
+    try {
+      await user?.delete();
+      toast.success("Hisob o‘chirildi.");
+    } catch (error) {
+      console.error("Xatolik yuz berdi:", error);
+      toast.error("Hisobni o‘chirishda xatolik yuz berdi.");
+    }
+  };
   
   if(!isLoaded){
     return(
@@ -86,6 +98,7 @@ const handleChangeLastName = async () => {
 
   return (
     <div className="">
+
      <div className="flex items-center justify-between bg-secondary p-2">
       <h1 className="font-semibold text-xl">Account</h1> 
       <div className="flex items-center gap-2">
@@ -93,6 +106,7 @@ const handleChangeLastName = async () => {
       <Menu/>
       </div>
      </div>
+      <SidebarTrigger />
       <div className="p-2">
             <div className="mt-2 flex items-center gap-2 text-sm">
         <h1>Firstname:</h1>
@@ -131,7 +145,7 @@ const handleChangeLastName = async () => {
         </div>
       <Separator className="mt-2"/>
       <div className="flex items-center gap-2 text-sm">
-          <h1>{t("image")}</h1>
+          <h1>{t("image")}:</h1>
           <div className="mt-2 flex items-center gap-4">
           {loading ? <div className="w-10 h-10 flex items-center justify-center border-2 rounded-full"><Loader/></div> : <img src={user?.imageUrl} alt="logo" className="w-8 h-8 rounded-full" />}
         <div>
@@ -156,15 +170,38 @@ const handleChangeLastName = async () => {
         </div>
       </div>
       <Separator className="mt-2"/>
-      <div className="text-sm space-y-2">
-        <h1>Danger zone</h1>
+      <div className="text-sm flex items-center gap-2">
+        <h1>Danger zone:</h1>
+         <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant={"destructive"}>
+            Delete account
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle >Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your account
+              and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      </div>
+      <Separator className="my-2"/>
+
          <SignOutButton>
-           <Button variant={"destructive"}>
+           <Button>
             <LogOut/>
             {t("logout")}
           </Button>
          </SignOutButton>
-      </div>
       </div>
     </div>
   )

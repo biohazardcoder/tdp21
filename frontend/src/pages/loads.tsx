@@ -73,33 +73,33 @@ export const Loads = () => {
   const sheetCloser = () => {
     setIsSheetOpen(false)
   }
-
+  
   const filteredLoads = data?.loads
-    ?.filter((load: Load) => {
-      const isDateMatch = filterDate ? load.createdAt.slice(0, 10) === filterDate : true
-      const isPriceMatch = filterPrice ? load.price >= Number(filterPrice) : true
-      const isWeightMatch = filterWeight ? load.weight.number <= Number(filterWeight) : true
-      const isLocationFromMatch = filterLocationFrom
-        ? load.location.from.city.toLowerCase().includes(filterLocationFrom.toLowerCase())
-        : true
-      const isLocationToMatch = filterLocationTo
-        ? load.location.to.city.toLowerCase().includes(filterLocationTo.toLowerCase())
-        : true
-      const isFridgeMatch = filterFridge ? load.fridge === true : true
-      const isCustomerMatch = !load.connentor
-
-      return (
-        isDateMatch &&
-        isPriceMatch &&
-        isWeightMatch &&
-        isLocationFromMatch &&
-        isLocationToMatch &&
-        isFridgeMatch &&
-        isCustomerMatch
-      )
-    })
-    .filter((load: Load) => load.title.toLowerCase().includes(search.toLowerCase()))
-
+  ?.filter((load: Load) => {
+    const isDateMatch = filterDate ? load.createdAt.slice(0, 10) === filterDate : true
+    const isPriceMatch = filterPrice ? load.price >= Number(filterPrice) : true
+    const isWeightMatch = filterWeight ? load.weight.number <= Number(filterWeight) : true
+    const isLocationFromMatch = filterLocationFrom
+    ? load.location.from.city.toLowerCase().includes(filterLocationFrom.toLowerCase())
+    : true
+    const isLocationToMatch = filterLocationTo
+    ? load.location.to.city.toLowerCase().includes(filterLocationTo.toLowerCase())
+    : true
+    const isFridgeMatch = filterFridge ? load.fridge === true : true
+    const isCustomerMatch = !load.connentor
+    
+    return (
+      isDateMatch &&
+      isPriceMatch &&
+      isWeightMatch &&
+      isLocationFromMatch &&
+      isLocationToMatch &&
+      isFridgeMatch &&
+      isCustomerMatch
+    )
+  })
+  .filter((load: Load) => load.title.toLowerCase().includes(search.toLowerCase()))
+  
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-[90vh]">

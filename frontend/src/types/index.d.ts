@@ -12,6 +12,7 @@ export interface UserProps{
     myLoads: Load[]
     connecting:[]
 }
+
 export interface Load {
     _id: string
     createdAt: string
