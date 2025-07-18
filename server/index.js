@@ -15,33 +15,39 @@ import {clerkClient} from "@clerk/express"
 const app = express();
 
 dotenv.config();
-app.use(cors());
+const allowedOrigins = ['https://tdp21com.vercel.app'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, 
+}));
 app.use(express.json());
 
-//User data.length
 app.get("/api/count", async (_, res) => {
   const {totalCount} = await clerkClient.users.getUserList()
   res.status(200).json({ totalCount});
   
 });
 
-//Test API
 app.get("/", (_, res) => {
   res.send("Server is running 🚀");
 });
 
-//Image upload
 app.use("/uploads", express.static("uploads"));
 app.use("/uploads/images", express.static("uploads/images"));
 
-//Routes
 app.use("/api/user", userRoutes);
 app.use("/api/load", loadRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/partner", partnerRoutes);
 
-//Payments
 app.use("/api/paypal",PaypalServise)
 
 const PORT = process.env.PORT || 5000;
