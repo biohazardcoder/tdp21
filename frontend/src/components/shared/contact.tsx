@@ -104,7 +104,7 @@ export const Contact = () => {
     }
 
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-2 w-full p-4 gap-4' id='contact'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 w-full p-4 gap-4 md:px-[10%]' id='contact'>
             <Card className='bg-secondary border-t-8 border-primary'>
                 <div className='flex flex-col justify-between h-full'>
                 <div className='space-y-2'>

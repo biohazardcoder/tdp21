@@ -101,3 +101,9 @@ export interface Creator {
     phone: string
     imageUrl: string
 }
+
+export interface ConnectingProps{
+    _id:string
+    status:string
+    load: Load
+}

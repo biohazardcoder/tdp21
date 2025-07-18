@@ -58,8 +58,8 @@ export const Loads = () => {
   const [search, setSearch] = useState("")
   const [isSheetOpen, setIsSheetOpen] = useState(false)
 
-  const { data, isLoading } = useSWR(`/load?page=${page}&limit=4`, fetcher)
-
+  const { data, isLoading } = useSWR(`/load?page=${page}&limit=8`, fetcher)
+    
   const resetFilters = () => {
     setFilterDate("")
     setFilterPrice("")
@@ -107,9 +107,9 @@ export const Loads = () => {
       </div>
     )
   }
-
+  
   return (
-    <div className="p-4">
+    <div className="p-4  md:px-[10%]">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold my-2">{t("loads")}</h1>
 
@@ -259,7 +259,11 @@ export const Loads = () => {
               )
             )}
 
-            {/* Pagination */}
+          </>
+        ) : (
+          <div className="text-center col-span-4 text-muted-foreground">{t("no-data")}</div>
+        )}
+      </div>
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
@@ -289,11 +293,6 @@ export const Loads = () => {
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
-          </>
-        ) : (
-          <div className="text-center col-span-4 text-muted-foreground">{t("no-data")}</div>
-        )}
-      </div>
     </div>
   )
 }

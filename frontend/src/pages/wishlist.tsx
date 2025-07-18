@@ -47,7 +47,7 @@ export const Wishlist = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 md:px-[10%]">
       <h1 className="text-2xl font-bold my-2">{t("wishlist")}</h1>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {savedLoads.map((load) => (

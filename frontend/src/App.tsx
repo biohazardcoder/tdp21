@@ -4,10 +4,6 @@ import { ThemeProvider } from "./components/providers/theme-provider"
 import { Home } from "./pages/home"
 import Error from "./pages/error"
 import { SignIn, SignUp, useUser } from "@clerk/clerk-react"
-import { useEffect } from "react"
-import { Fetch } from "./middlewares/Axios"
-import { useDispatch } from "react-redux"
-import { getError, getPending, getUserInfo } from "./toolkits/user-toolkit"
 import { Profile } from "./pages/profile"
 import { Navbar } from "./components/shared/navbar"
 import { DefaultNavbar } from "./components/shared/default-navbar"
@@ -17,51 +13,14 @@ import { Loads } from "./pages/loads"
 import { Detail } from "./pages/detail"
 import { Toaster } from "sonner"
 import { Wishlist } from "./pages/wishlist"
-import { Balance } from "./pages/balance"
 import { Requests } from "./pages/requests"
 import { YourLoads } from "./pages/yourloads"
 import { ProfileLayout } from "./layouts/profile-layout"
 import { YourLoadDetail } from "./pages/yourloaddetail"
+import useSyncUser from "./middlewares/useswr"
 const App = () => {
-  const { user, isSignedIn, isLoaded } = useUser();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const CreateUser = async () => {
-      if (isSignedIn && isLoaded && user?.unsafeMetadata?.initialized !== true) {
-        try {
-          await user?.update({
-            unsafeMetadata: {
-              initialized: true,
-            },
-          });
-  
-          const response = await Fetch.post("/user/create", {
-            clerkId: user.id,
-          });
-  
-          console.log("User synced:", response.data);
-        } catch (error) {
-          console.error("Error syncing user:", error);
-        }
-      }
-    };
-    const GetMe = async () => {
-      if (isSignedIn && isLoaded) {
-        dispatch(getPending())
-        try {
-          const response = await Fetch.post("/user/me", {
-              clerkId: user?.id,
-          });
-         dispatch(getUserInfo(response.data))
-        } catch (error) {
-          dispatch(getError((error)))
-        } finally{
-        }
-      }
-    };
-    CreateUser();
-    GetMe();
-  }, [isSignedIn, isLoaded, user]);
+  const {  isSignedIn, isLoaded } = useUser();
+ useSyncUser();
   return (
     <ThemeProvider defaultTheme="dark" storageKey="tdp21-theme">
       <Toaster position="top-center"/> 
@@ -135,12 +94,7 @@ const App = () => {
         </div>
       }/>
 
-      <Route path="/balance" element={
-        <div>
-        <Navbar LoadPage={true}/>
-        <Balance/>
-      </div>
-      }/>
+   
       
     <Route path="/yourloads" element={
         <div>
@@ -157,9 +111,7 @@ const App = () => {
     }/>
 
     <Route path="/profile" element={
-      <ProfileLayout>
           <Profile/>
-      </ProfileLayout>
     }/>
     <Route path="/yourload/:id" element={
       <div>

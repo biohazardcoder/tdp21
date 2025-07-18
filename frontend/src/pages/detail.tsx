@@ -101,11 +101,6 @@ export const Detail = () => {
           setConnecting(false)
           return
       }
-      if (user?.coins < load.price/100) {
-          toast.error(t("enough"))
-          setConnecting(false)
-          return
-      }
       try {
            await Fetch.post("load/connecting", {
               id: id, 
@@ -169,7 +164,7 @@ export const Detail = () => {
     }
 
     return (
-        <div className='w-full h-[90vh] overflow-y-auto  lg:h-screen'>
+        <div className='w-full h-[90vh] overflow-y-auto px-0 md:px-[10%]  lg:h-screen'>
             <div className='grid grid-cols-1 gap-2  p-4 lg:grid-cols-3 w-full h-auto lg:h-[calc(100vh-64px)]'>
                 <div className='col-span-1  w-full'>
                 <div    className="bg-card rounded-md">

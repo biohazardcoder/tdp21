@@ -25,7 +25,7 @@ export const Stats = () => {
             },
         ]
   return (
-    <div className='w-full p-4 border-t' id='statistics'>
+    <div className='w-full p-4 border-t md:px-[10%]' id='statistics'>
         <h1 className='text-4xl font-semibold text-center'>{t("statistics")}:</h1>        
         <div className='w-full grid grid-cols-1 md:grid-cols-2 mt-4  gap-4 items-center'>
             {stats.map(({image,length,title}:StatsInterface, index:number)=>(

@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   clerkId: { type: String, required: true, unique: true },
-  coins:{ type: Number, default: 0 },
   buyHistory: [],
   loads: [{type:mongoose.Schema.Types.ObjectId, ref:"Load"}],
   createdLoads : [],

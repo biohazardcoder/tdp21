@@ -115,5 +115,10 @@
     "load-removed":"Load removed",
     "no-wishlist":"No wishlist",
     "explore-loads":"Explore loads",
-    "accepted" : "Accepted"
+    "accepted" : "Accepted",
+  "sent-requests": "Sent Requests",
+  "no-requests-sent": "No requests have been sent yet.",
+  "no-title": "No title",
+  "no-description": "No description available"
+
 }

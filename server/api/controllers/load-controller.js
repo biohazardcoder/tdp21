@@ -152,8 +152,6 @@ export const ConnectingDriver = async (req, res) => {
           (conn) => conn.load.toString() !== id
         );
         user.loads.push(id)
-        const onePercentOfPrice = load.price / 100;
-        user.coins -= onePercentOfPrice;
         
       await User.updateMany(
         {

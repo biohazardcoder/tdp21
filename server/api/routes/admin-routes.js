@@ -8,7 +8,7 @@ import {
   updateAdmin,
   GetMe,
 } from "../controllers/admin-controller.js";
-import isExisted from "../../../../delivery-main/server/api/middlewares/isExisted.js";
+import isExisted from "../../middlewares/isExisted.js";
 
 const router = express.Router();
 

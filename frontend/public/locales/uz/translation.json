@@ -108,10 +108,8 @@
     "enough":"Sizda tangalar yetarli emas",
     "request":"So'rov yuborildi",
     "accept":"So'rov qabul qilindi",
-
     "noneed":"kerak emas",
     "not-selected":"Tanlanmagan",
-
     "tonna":"Tonna",
     "required":"Barcha maydonlar talab qilinadi",
     "successfully":"Sizning yukingiz muvaffaqiyatli yaratildi",
@@ -119,7 +117,10 @@
     "load-removed":"Yuk o'chirildi",
     "no-wishlist":"Xohishlar ro'yxati topilmadi",
     "explore-loads":"Yuklarni o'rganish",
-    "accepted":"Qabul qilingan"
-
+    "accepted":"Qabul qilingan",
+  "sent-requests": "Yuborilgan so‘rovlar",
+  "no-requests-sent": "Hozircha yuborilgan so‘rovlar yo‘q.",
+  "no-title": "Sarlavha yo‘q",
+  "no-description": "Izoh mavjud emas"
 
 }

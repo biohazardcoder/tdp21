@@ -63,7 +63,7 @@ export const YourLoadDetail = () => {
 
   return (
     <div className="h-screen ">
-      <div className="p-4 w-full h-auto lg:h-[calc(100vh-64px)]">
+      <div className="p-4 w-full h-auto lg:h-[calc(100vh-64px)] md:px-[10%]">
         <Link to={'/yourloads'}>
           <Button >
             <ChevronLeft size={20} className='mr-1'/> {t("back")}

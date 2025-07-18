@@ -115,5 +115,9 @@
     "load-removed":"Груз удален",
     "no-wishlist":"Нет желаемого груза",
     "explore-loads":"Изучить грузы",
-    "accepted" : "Принял"
+    "accepted" : "Принял",
+    "sent-requests": "Отправленные запросы",
+    "no-requests-sent": "Запросы еще не отправлены.",
+    "no-title": "Заголовок отсутствует",
+    "no-description": "Описание отсутствует"
 }
