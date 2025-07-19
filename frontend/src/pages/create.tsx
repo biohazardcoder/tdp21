@@ -104,7 +104,7 @@ export const Create = () => {
         formData.append("images", image); 
       });
 
-      await axios.post("https://tdp21com.onrender.com/api/load/create", formData, {
+      await axios.post("hhttp://tdp21.mukammal-crm.uz/api/load/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       resetForm()
