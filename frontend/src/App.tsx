@@ -15,9 +15,9 @@ import { Toaster } from "sonner"
 import { Wishlist } from "./pages/wishlist"
 import { Requests } from "./pages/requests"
 import { YourLoads } from "./pages/yourloads"
-import { ProfileLayout } from "./layouts/profile-layout"
 import { YourLoadDetail } from "./pages/yourloaddetail"
 import useSyncUser from "./middlewares/useswr"
+import { Accepteds } from "./pages/accepteds"
 const App = () => {
   const {  isSignedIn, isLoaded } = useUser();
  useSyncUser();
@@ -107,6 +107,12 @@ const App = () => {
         <div>
         <Navbar LoadPage={true}/>
         <Requests/>
+      </div>
+    }/>
+    <Route path="/accepted" element={
+        <div>
+        <Navbar LoadPage={true}/>
+        <Accepteds/>
       </div>
     }/>
 

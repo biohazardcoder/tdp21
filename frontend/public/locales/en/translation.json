@@ -116,9 +116,13 @@
     "no-wishlist":"No wishlist",
     "explore-loads":"Explore loads",
     "accepted" : "Accepted",
-  "sent-requests": "Sent Requests",
+  "sent-requests": "Sent requests",
   "no-requests-sent": "No requests have been sent yet.",
   "no-title": "No title",
-  "no-description": "No description available"
-
+  "no-description": "No description available",
+  "this-is-your-load": "This is your load",
+  "already-accepted": "This load has already been accepted",
+  "search-by-title": "Search by title",
+  "something-went-wrong": "Something went wrong",
+  "accepted-loads": "Accepted loads"
 }

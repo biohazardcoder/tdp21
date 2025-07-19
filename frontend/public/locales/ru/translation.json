@@ -105,9 +105,7 @@
     "request":"Запрос отправлен",
     "accept":"Запрос принят",
     "search":"Поиск",
-
     "not-selected":"Не выбрано",
-
     "tonna":"Тонна",
     "required":"Все поля обязательны для заполнения",
     "successfully":"Ваша груз успешно создана",
@@ -119,5 +117,10 @@
     "sent-requests": "Отправленные запросы",
     "no-requests-sent": "Запросы еще не отправлены.",
     "no-title": "Заголовок отсутствует",
-    "no-description": "Описание отсутствует"
+    "no-description": "Описание отсутствует",
+  "this-is-your-load": "Это ваш груз",
+  "already-accepted": "Этот груз уже был принят",
+  "search-by-title": "Поиск по названию",
+  "something-went-wrong": "Произошла ошибка",
+  "accepted-loads": "Принятые грузы"
 }

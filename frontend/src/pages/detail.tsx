@@ -30,7 +30,10 @@ export const Detail = () => {
     const {data } = useSelector((state:RootState) => state.user)
     const user= data as UserProps || {}
     const currentLoad = user?.myLoads?.find(({_id}:Load) => _id === load?._id) 
+    const acceptedLoad = user?.loads?.find(({_id}:Load) => _id === load?._id) 
     const mine = load?._id === currentLoad?._id ? true : false
+    const accepted = load?._id === acceptedLoad?._id ? true : false
+  
     const dispatch = useDispatch();
     
     async function getMyData() {
@@ -220,19 +223,21 @@ export const Detail = () => {
                         <p className='text-xs text-muted-foreground mt-2'>{t("wallet-description")}</p>
                     </div>
                     <Separator className='my-2'/>
-                  <Button
-                    onClick={handleConnectingDriver}
-                    className="w-full"
-                    disabled={mine || already || connecting}
-                  >
-                    {mine
-                      ? t("This is your load")
-                      : already
-                      ? t("already-sent")
-                      : connecting
-                      ? t("pending")
-                      : t("send")}
-                  </Button>
+                 <Button
+                  onClick={handleConnectingDriver}
+                  className="w-full"
+                  disabled={mine || already || connecting || accepted}
+                >
+                  {mine
+                    ? t("this-is-your-load")
+                    : accepted
+                    ? t("already-accepted")
+                    : connecting
+                    ? t("pending")
+                    : already
+                    ? t("already-sent")
+                    : t("send")}
+                </Button>
                 </div>
               </div>
                 </div>

@@ -29,7 +29,7 @@ export const GetMe  = async (req, res) => {
   const { clerkId } = req.body;
   try {
     
-    const user = await User.findOne({ clerkId }).populate("myLoads").populate({
+    const user = await User.findOne({ clerkId }).populate("myLoads").populate("loads").populate({
           path: "connecting.load",
         });
     

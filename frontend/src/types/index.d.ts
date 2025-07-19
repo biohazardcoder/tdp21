@@ -7,7 +7,7 @@ export interface UserProps{
     updatedAt: string;
     savedLoads: string[];
     createdLoads: string[];
-    loads: string[];
+    loads: Load[];
     __v: number;
     myLoads: Load[]
     connecting:[]

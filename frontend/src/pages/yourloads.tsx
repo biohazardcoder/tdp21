@@ -45,7 +45,7 @@ export const YourLoads = () => {
   }
 
   if (error) {
-    return <div className="text-center text-red-500">{t("error-loading-data")}</div>;
+    return <div className="text-center mt-2">{t("something-went-wrong")}</div>;
   }
 
   const filteredLoads = data?.myLoads

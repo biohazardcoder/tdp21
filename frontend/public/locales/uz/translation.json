@@ -103,7 +103,6 @@
     "payment-method":"To`lov usuli",
     "already-sent":"Allaqachon yuborilgan",
     "search":"Qidiruv",
-
     "load-not-found":"Yuk topilmadi",
     "enough":"Sizda tangalar yetarli emas",
     "request":"So'rov yuborildi",
@@ -118,9 +117,13 @@
     "no-wishlist":"Xohishlar ro'yxati topilmadi",
     "explore-loads":"Yuklarni o'rganish",
     "accepted":"Qabul qilingan",
-  "sent-requests": "Yuborilgan so‘rovlar",
-  "no-requests-sent": "Hozircha yuborilgan so‘rovlar yo‘q.",
-  "no-title": "Sarlavha yo‘q",
-  "no-description": "Izoh mavjud emas"
-
+    "sent-requests": "Yuborilgan so‘rovlar",
+    "no-requests-sent": "Hozircha yuborilgan so‘rovlar yo‘q.",
+    "no-title": "Sarlavha yo‘q",
+    "no-description": "Izoh mavjud emas",
+    "this-is-your-load": "Bu sizning yukingiz",
+    "already-accepted": "Bu yuk allaqachon qabul qilingan",
+    "search-by-title": "Sarlavha bo‘yicha qidiring",
+    "something-went-wrong": "Xatolik yuz berdi",
+    "accepted-loads": "Qabul qilinganlar"
 }

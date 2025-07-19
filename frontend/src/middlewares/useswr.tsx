@@ -46,7 +46,7 @@ const useSyncUser = () => {
       return response.data;
     },
     {
-      onError: (error) => dispatch(getError(error)),
+      onError: (error) => dispatch(getError(error.response.data.message)),
       revalidateOnFocus: false,
     }
   );

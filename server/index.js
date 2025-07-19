@@ -15,18 +15,19 @@ import {clerkClient} from "@clerk/express"
 const app = express();
 
 dotenv.config();
-const allowedOrigins = ['https://tdp21com.vercel.app'];
+// const allowedOrigins = ['https://tdp21com.vercel.app'];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, 
-}));
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true, 
+// }));
+app.use(cors())
 app.use(express.json());
 
 app.get("/api/count", async (_, res) => {
@@ -42,7 +43,7 @@ app.get("/", (_, res) => {
 app.use("/uploads", express.static("uploads"));
 app.use("/uploads/images", express.static("uploads/images"));
 
-app.use("/api/user", userRoutes);
+app.use("/api/user", userRoutes); 
 app.use("/api/load", loadRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
