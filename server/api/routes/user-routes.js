@@ -4,8 +4,8 @@ import { CreateUser, GetAllUsers, GetMe, GetUserById } from "../controllers/user
 const router = express.Router();
 router.get("/", GetAllUsers)
 router.get("/:clerkId", GetUserById)
+router.get("/getme/:clerkId", GetMe);
 router.post("/create", CreateUser)
-router.post("/me", GetMe)
 
 // router.post("/verify", async (req, res) => {
 //   const { clerkId } = req.body;
