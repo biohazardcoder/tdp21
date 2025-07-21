@@ -21,27 +21,25 @@ export const Detail = () => {
     const {t} = useTranslation()
     const [load, setLoad] = useState<Load>()
     const [creator, setCreator] = useState<Creator>() 
+      const UserData = useUser();
     const { id } = useParams()
     const [loading, setLoading] = useState(false)
     const [isSaved, setIsSaved] = useState(false)
     const [already, setAlready] = useState(false)
     const [connecting, setConnecting] = useState(false)
-    const UserData = useUser()
     const {data } = useSelector((state:RootState) => state.user)
     const user= data as UserProps || {}
     const currentLoad = user?.myLoads?.find(({_id}:Load) => _id === load?._id) 
     const acceptedLoad = user?.loads?.find(({_id}:Load) => _id === load?._id) 
     const mine = load?._id === currentLoad?._id ? true : false
     const accepted = load?._id === acceptedLoad?._id ? true : false
-  
+      
     const dispatch = useDispatch();
     
     async function getMyData() {
       try {
         dispatch(getPending());
-        const response = await Fetch.post("/user/me", {
-          clerkId: UserData?.user?.id
-        });
+        const response = await Fetch.get(`/user/getme/${UserData.user?.id}`);
         if (response?.data) {
           dispatch(getUserInfo(response.data));
         } else {

@@ -18,8 +18,8 @@ import {
 import { Fetch } from "../middlewares/Axios";
 import { Load } from "../types";
 
-const fetcher = (url: string, body: object) =>
-  Fetch.post(url, body).then((res) => res.data);
+const fetcher = (url: string) =>
+  Fetch.get(url, ).then((res) => res.data);
 
 export const YourLoads = () => {
   const { t } = useTranslation();
@@ -32,10 +32,11 @@ export const YourLoads = () => {
   }
 
   const { data, isLoading, error } = useSWR(
-    isSignedIn && isLoaded && user?.id ? ["/user/me", { clerkId: user.id }] : null,
-    ([url, body]) => fetcher(url, body)
-  );
+  isSignedIn && isLoaded && user?.id ? `/user/getme/${user?.id}` : null,
+  fetcher
+);
 
+  
   if (!isLoaded || isLoading) {
     return (
       <div className="w-full flex items-center justify-center h-[90vh]">
@@ -50,10 +51,10 @@ export const YourLoads = () => {
 
   const filteredLoads = data?.myLoads
     ?.filter((load: Load) =>
-      load.title.toLowerCase().includes(search.toLowerCase())
+      load?.title?.toLowerCase().includes(search?.toLowerCase())
     )
     ?.reverse();
-
+    
   return (
     <div className="px-4 md:px-[10%]">
       <h1 className="font-semibold py-2 text-lg">{t("your-loads")}</h1>
