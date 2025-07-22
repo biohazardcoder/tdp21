@@ -16,10 +16,15 @@ import {clerkClient} from "@clerk/express"
 const app = express();
 
 dotenv.config();
+
+
 app.use(cors({
-  origin: 'https://tdp21.devs-hub.uz', 
-  credentials: true 
+  origin: ["https://tdp21.devs-hub.uz","https://admin-tdp21.devs-hub.uz"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use(express.json());
 // app.use(cors());
 
