@@ -16,20 +16,12 @@ import {clerkClient} from "@clerk/express"
 const app = express();
 
 dotenv.config();
-// const allowedOrigins = ['https://tdp21com.vercel.app'];
-
-// app.use(cors({
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true, 
-// }));
-app.use(cors())
+app.use(cors({
+  origin: 'https://tdp21.devs-hub.uz', 
+  credentials: true 
+}));
 app.use(express.json());
+// app.use(cors());
 
 app.get("/api/count", async (_, res) => {
   const {totalCount} = await clerkClient.users.getUserList()

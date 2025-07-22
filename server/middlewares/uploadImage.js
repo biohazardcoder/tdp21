@@ -33,7 +33,7 @@ const upload = multer({
   
       if (req.files) {
         req.uploadedImages = req.files.map(
-          (file) => `${req.protocol}://${req.get("host")}/uploads/images/${file.filename}`
+          (file) => `https://tdp21.mukammal-crm.uz/uploads/images/${file.filename}`
         );
       }
   
