@@ -1,6 +1,6 @@
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, Ban, CalendarPlus2, Check, CheckCheck, ChevronLeft, Eye,  MapPin,  MessageSquareMore, PackageSearch,  Phone,  Settings2, Snowflake,  Wallet, X } from 'lucide-react'
+import { ArrowRight, Ban, CalendarPlus2, Check, CheckCheck, ChevronLeft, Eye,  MapPin,  PackageSearch,  Phone,  Settings2, Snowflake,  Wallet, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { toast } from 'sonner'
@@ -11,14 +11,16 @@ import { Button } from '../components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel';
 import { Load } from '../types';
 import Loader from '../components/ui/loader';
+import ChatModal from '../components/shared/chat-modal';
 const fetcher = (url: string) => Fetch.get(url).then(res => res.data);
 
 export const YourLoadDetail = () => {
   const {t} = useTranslation()
  const { id } = useParams();
  const { data, error, isLoading,mutate } = useSWR(id ? `/load/${id}` : null, fetcher);
- const load = data?.load as Load
-
+ const load = data?.load as Load;
+    
+    
   if (isLoading) return <div className='w-full h-[90vh] flex items-center justify-center'>
     <Loader/>
   </div>;
@@ -154,10 +156,10 @@ export const YourLoadDetail = () => {
                     </div> 
                   </div>
                  <div className='flex items-center gap-2'>
-                 <Button className='bg-chart-2 hover:bg-chart-2/90'>
-                    <MessageSquareMore/>
+                 <Button className='p-0'>
+                 <ChatModal image={load?.connentor.driver.imageUrl} client={load?.clerkId || ""} driver={load?.connentor?.driver?.clerkId || ""}/>
                   </Button>
-                  <Button variant="destructive" onClick={()=>handleDisconnect(load.connentor.driver._id||"")}>
+                  <Button variant="destructive" onClick={()=>handleDisconnect(load?.connentor?.driver?._id||"")}>
                     <Ban/>
                   </Button>
                  </div>

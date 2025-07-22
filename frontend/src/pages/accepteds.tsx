@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { Load, UserProps } from "../types";
+import { Creator, Load, UserProps } from "../types";
 import { useTranslation } from "react-i18next";
 import {
   Wallet,
@@ -12,7 +12,6 @@ import {
   X,
   Loader,
   Eye,
-  MessageSquareMore,
 } from "lucide-react";
 import {
   Carousel,
@@ -27,19 +26,31 @@ import { Navbar } from "../components/shared/navbar";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { useState } from "react";
+import ChatModal from "../components/shared/chat-modal";
+import { Fetch } from "../middlewares/Axios";
 
 export const Accepteds = () => {
   const { t } = useTranslation();
   const { data, isPending, isError } = useSelector(
     (state: RootState) => state.user
   );
-
+    const [creator, setCreator] = useState<Creator>() 
   const user = (data as UserProps) || {};
   const [search, setSearch] = useState("");
 
   const filteredLoads = user?.loads?.filter((load) =>
     load.title.toLowerCase().includes(search.toLowerCase())
   );
+  
+      const getLoadById = async (id:string) => {
+        try {
+          const response = (await Fetch.get(`/load/${id}`)).data
+          setCreator(response.creator)
+          
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
   if (isPending) {
     return (
@@ -83,7 +94,7 @@ export const Accepteds = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredLoads?.map(
-            ({ _id, images, location, price, title, weight, fridge }: Load) => (
+            ({ _id, images, location, price, title, weight, fridge,clerkId,connentor }: Load) => (
               <div key={_id} className="bg-card p-2 rounded-md">
                 <Carousel className="w-full h-64">
                   <CarouselContent>
@@ -141,8 +152,10 @@ export const Accepteds = () => {
                         <Eye />
                       </Button>
                     </Link>
-                    <Button variant={"default"}>
-                      <MessageSquareMore />
+                    <Button
+                      className="p-0"
+                    variant={"default"} onClick={()=>getLoadById(_id)}>
+                      <ChatModal image={creator?.imageUrl || ""} client={clerkId} driver={connentor.driver.clerkId}/>
                     </Button>
                   </div>
                 </div>

@@ -17,7 +17,7 @@ export interface Load {
     _id: string
     createdAt: string
     updatedAt: string
-    customer: Customer,
+    clerkId: string,
     title: string,
     description: string,
     contact: number,

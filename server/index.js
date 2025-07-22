@@ -5,6 +5,7 @@ import loadRoutes from "./api/routes/load-routes.js";
 import adminRoutes from "./api/routes/admin-routes.js";
 import contactRoutes from "./api/routes/contact-route.js"
 import partnerRoutes from "./api/routes/partner-route.js"
+import chatRoutes from "./api/routes/chat-route.js"
 
 import PaypalServise from "./api/services/paypal-service.js";
 
@@ -44,6 +45,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/uploads/images", express.static("uploads/images"));
 
 app.use("/api/user", userRoutes); 
+app.use("/api/chat", chatRoutes); 
 app.use("/api/load", loadRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
